@@ -1,25 +1,25 @@
 package com.youknowwho.androidmqttclient;
 
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.youknowwho.androidmqttclient.databinding.ActivityMainBinding;
 
-import android.view.Menu;
-import android.view.MenuItem;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 public class MainActivity extends AppCompatActivity {
 
+    MQTTClient client;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
@@ -43,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        try {
+            client = new MQTTClient("tcp://mqtt.fedcampus.eu.org", "0", "django/mqtt", "", "");
+        } catch (MqttException e) {
+            Log.w("Failed to create MQTT client", e);
+        }
     }
 
     @Override
