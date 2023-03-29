@@ -1,7 +1,6 @@
 package com.youknowwho.androidmqttclient;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,11 +13,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.snackbar.Snackbar;
 import com.youknowwho.androidmqttclient.databinding.ActivityMainBinding;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
-
 public class MainActivity extends AppCompatActivity {
-
-    MQTTClient client;
     ActivityMainBinding binding;
     private AppBarConfiguration appBarConfiguration;
 
@@ -37,12 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
-
-        try {
-            client = new MQTTClient("tcp://mqtt.fedcampus.eu.org", "0", "django/mqtt", "", "");
-        } catch (MqttException e) {
-            Log.w("Failed to create MQTT client", e);
-        }
     }
 
     @Override

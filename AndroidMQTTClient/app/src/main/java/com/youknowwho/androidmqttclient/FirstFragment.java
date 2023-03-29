@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment;
 
 import com.youknowwho.androidmqttclient.databinding.FragmentFirstBinding;
 
-public class FirstFragment extends Fragment {
+import org.eclipse.paho.client.mqttv3.MqttException;
 
+public class FirstFragment extends Fragment {
+    MQTTClient client;
     private FragmentFirstBinding binding;
 
     @Override
@@ -20,6 +22,12 @@ public class FirstFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
+        // Connect to MQTT broker and subscribe.
+        try {
+            client = new MQTTClient("tcp://mqtt.fedcampus.eu.org", "0", "django/mqtt", "", "");
+        } catch (MqttException e) {
+            Log.w("Failed to create MQTT client", e);
+        }
 
         binding = FragmentFirstBinding.inflate(inflater, container, false);
         return binding.getRoot();
