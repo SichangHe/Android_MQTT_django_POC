@@ -16,7 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from backend import views
+from backend import mqtt, views
+
+mqtt.client.loop_start()
 
 urlpatterns = [
     path("admin/", admin.site.urls),
