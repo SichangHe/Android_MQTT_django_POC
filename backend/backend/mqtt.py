@@ -2,7 +2,11 @@ import paho.mqtt.client as mqtt
 from django.conf import settings
 
 
-def on_connect(mqtt_client, userdata, flags, rc):
+def on_connect(mqtt_client: mqtt.Client, userdata, flags: dict, rc: int):
+    """
+    Callback for `client` when it connects.
+    - `rc`: connection status code. 0 means success.
+    """
     if rc == 0:
         print("Connected successfully")
         mqtt_client.subscribe("django/mqtt")
@@ -10,7 +14,10 @@ def on_connect(mqtt_client, userdata, flags, rc):
         print("Bad connection. Code:", rc)
 
 
-def on_message(mqtt_client, userdata, msg):
+def on_message(mqtt_client: mqtt.Client, userdata, msg: mqtt.MQTTMessage):
+    """
+    Callback for `client` when it receives a message.
+    """
     print(f"Received message on topic: {msg.topic} with payload: {msg.payload}")
 
 
