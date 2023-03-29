@@ -12,8 +12,10 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MQTTClient implements MqttCallback {
     MqttClient client;
+    String topic;
 
     public MQTTClient(String brokerUrl, String clientId, String topic, String username, String password) throws MqttException {
+        this.topic = topic;
         client = new MqttClient(brokerUrl, clientId, new MemoryPersistence());
         client.setCallback(this);
         // MQTT connection options.
@@ -26,6 +28,9 @@ public class MQTTClient implements MqttCallback {
         client.subscribe(topic);
     }
 
+    public void publish(String content) throws MqttException {
+        client.publish(topic, new MqttMessage(content.getBytes()));
+    }
 
     @Override
     public void connectionLost(Throwable cause) {

@@ -40,7 +40,11 @@ public class FirstFragment extends Fragment {
         binding.buttonFirst.setOnClickListener(
                 view1 -> {
                     String text = binding.etMain.getText().toString();
-                    Log.i("Input text", text);
+                    try {
+                        client.publish(text);
+                    } catch (MqttException e) {
+                        Log.w("MQTT publish failure", e);
+                    }
                 }
         );
     }
